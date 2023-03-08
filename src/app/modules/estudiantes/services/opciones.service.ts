@@ -12,7 +12,7 @@ export class OpcionesService {
     {class: 'fa-solid fa-file-signature', nombre: 'MATRICULACIÓN', metodo: 'irMatriculacion'},
     {class: 'fa-solid fa-file-circle-check', nombre: 'CALIFICACIONES', metodo: 'irCalificaciones'},
     {class: 'fa-solid fa-clipboard-user', nombre: 'ASISTENCIAS', metodo: 'irAsistencias'},
-    {class: 'fa-solid fa-clipboard-check', nombre: 'EVALUACIÓN DOCENTE', metodo: 'irEvaluacionDocente'}
+    {class: 'fa-solid fa-clipboard-check', nombre: 'DETALLES DE CALIDAD', metodo: 'irEvaluacionDocente'}
   ];
 
   constructor() { }

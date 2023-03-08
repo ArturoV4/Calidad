@@ -48,7 +48,7 @@ const routes: Routes = [
     component: CalificacionesComponent
   },
   {
-    path: 'matriculacion',
+    path: 'calidad',
     component: MatriculacionComponent
   }
 ];

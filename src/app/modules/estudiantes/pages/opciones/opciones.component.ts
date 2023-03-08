@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ConsumidorAPIService } from 'src/app/shared/services/consumidor-api.service';
 import { Opcion } from '../../models/OpcionEstudiante';
@@ -16,7 +17,8 @@ export class OpcionesComponent {
   constructor(
     private dataOpcion: OpcionesService,
     private router: Router,
-    private consumidor: ConsumidorAPIService
+    private consumidor: ConsumidorAPIService,
+    private snackbar: MatSnackBar
   ) {}
 
   async ngOnInit() {
@@ -41,7 +43,7 @@ export class OpcionesComponent {
       this.irCalificaciones();
     } else if (nombre == "ASISTENCIAS") {
       this.irAsistencias();
-    } else if (nombre == "EVALUACIÓN DOCENTE") {
+    } else if (nombre == "GESTIÓN CALIDAD") {
       this.irEvaluacionDocente();
     }
   }
@@ -51,11 +53,12 @@ export class OpcionesComponent {
   }
 
   irMatriculacion() {
-    this.router.navigate(['/estudiante/matriculacion']);
+    this.snackbar.open('El estudiante ya está matriculado.',  'OK', { duration: 3000 });
+    this.router.navigate(['/estudiante/inicio']);
   }
 
   irEvaluacionDocente() {
-    this.router.navigate(['/estudiante/inicio']);
+    this.router.navigate(['/estudiante/calidad']);
   }
 
   irCalificaciones() {
