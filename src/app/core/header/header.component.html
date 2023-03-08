@@ -5,11 +5,17 @@
                 CENTRO ARTESANAL UG
             </a>
 
-            <ul>
+            <ul *ngIf="rol === 0">
                 <li><a routerLink="inicio" routerLinkActive="activeLink" href="">Inicio</a></li>
                 <li><a routerLink="estudiantes" routerLinkActive="activeLink" href="">Estudiantes</a></li>
                 <li><a routerLink="profesores" routerLinkActive="activeLink" href="">Profesores</a></li>
             </ul>
+
+            <ul *ngIf="rol === 1">
+                <li><a routerLink="estudiante/inicio" routerLinkActive="activeLink" href="">Inicio</a></li>
+                <li><a routerLink="estudiante/opciones" routerLinkActive="activeLink" href="">Herramientas</a></li>
+            </ul>
+
         </nav>
 
         <div class="info">
@@ -17,10 +23,13 @@
             <!-- SE MUESTRA CUANDO HAY UN USUARIO LOGUEADO -->
             <div class="info-active" *ngIf="active">
 
+                <span class="user">{{ usuario }}</span>
+
                 <div class="account">
                     <!-- Si hay un usuario, se presenta el menú -->
                     <button [matMenuTriggerFor]="menu" class="menu-item" matTooltip="Mi cuenta">
                       <i class="fa-solid fa-user"></i>
+                      <i class="mx-1 fa-solid fa-caret-down"></i>
                     </button>
                  </div>
 
@@ -64,12 +73,14 @@
       <div class="info">
 
         <div class="info-active" *ngIf="active">
-            <div class="account">
+
+            <div class="account">                
                 <!-- Si hay un usuario, se presenta el menú -->
                 <button [matMenuTriggerFor]="menu" class="menu-item" matTooltip="Mi cuenta">
                   <i class="fa-solid fa-user"></i>
                 </button>
              </div>
+
         </div>
 
         <!-- SE MUESTRA CUANDO NO HAY UN USUARIO LOGUEADO -->
@@ -113,7 +124,7 @@
     <!-- Barra divisora -->
     <mat-divider></mat-divider>
     <!-- Botón de logout -->
-    <button mat-menu-item>
+    <button mat-menu-item (click)="logout()">
       <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
     </button>    
   </mat-menu>

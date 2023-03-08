@@ -25,6 +25,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -56,7 +57,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatCheckboxModule,
     MatListModule,
     MatStepperModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule
   ],
   exports: [
     CommonModule,
@@ -84,7 +86,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatCheckboxModule,
     MatListModule,
     MatStepperModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule
   ]
 })
 export class MaterialModule { }

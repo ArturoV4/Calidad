@@ -166,7 +166,13 @@ a{
   }
 
 .info-active, .info-inactive{
-    display: flex;    
+    display: flex;
+    align-items: center;    
+}
+
+.user {
+    color: white;
+    margin-right: 10px;
 }
 
 .botones {

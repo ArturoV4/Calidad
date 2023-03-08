@@ -1,60 +1,81 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { EstudianteServiceService } from 'src/app/modules/estudiantes/services/estudiante-service.service';
+import { DocenteServiceService } from 'src/app/modules/profesores/services/docente-service.service';
 import { environment } from 'src/environments/environment';
+import { Usuario } from '../models/Usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  
-
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private cookie: CookieService,
+    private dataEstudiante: EstudianteServiceService,
+    private dataDocente: DocenteServiceService,
+    private router: Router
+  ) {}
 
-  urlBase="https://localhost:7235/api/Usuario/GetUsuarios/"
-  headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-
-  // consultarCredenciales(post: any): Observable<any> {
-  //   const url = `${environment.urlBAse}${environment.pathUrl.urlGetProductos}`;    
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',        
-  //       'Access-Control-Allow-Origin': '*'
-  //     })
-  //   }
-  //   return this.http.post(url, post, httpOptions);
-  // }
-
-  consultarCredencial(cedula: string, contra: string): Observable<any> {    
-    const post = {
-      cedula,
-      contra
-    };
-    const url = `${environment.urlBAse}${environment.pathUrl.urlGetCredenciales}`;    
+  getCredentials(credenciales: any): Observable<Usuario> {    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',        
         'Access-Control-Allow-Origin': '*'
       })
     }
-    console.log(url, post);
-    return this.http.post(url, post, httpOptions);
+    const url = `${environment.urlBAse}${environment.pathUrl.urlPostCredential}`;    
+    return this.http.post<Usuario>(url, credenciales, httpOptions);
   }
 
-  AddCliente(cedula: string, contra: string){
-    const urlGetById="http://localhost:4200/login"
-    let body = JSON.stringify({cedula: cedula,contra:contra});
-    return this.http.post<any>(urlGetById,body, {headers: this.headers});
-    // const httpOptions = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ cedula: cedula, contra: contra }),
-    //   };
-    // // console.log(url, post);
-    // return this.http.post(url, httpOptions);
+  logueado(rol_id: number) {
+
+    let user: any;
+
+    if (rol_id === 1) {
+      
+      user = this.dataEstudiante.getEstudiante();
+
+    } else if (rol_id === 2) {
+      
+      user = this.dataDocente.getDocente();
+    
+    }
+
+    this.cookie.set('active', 'true');
+    this.cookie.set('usuario', user.nombres + ' ' + user.apellidos);
+    this.cookie.set('id', user.id.toString());
+    this.cookie.set('rol', user.rol_id.toString());
+
+  }
+
+  logOut() {
+    this.cookie.set('active', 'false');
+    this.cookie.set('usuario', '');
+    this.cookie.set('id', '');
+    this.cookie.set('rol', '');
+
+    window.open('/inicio', '_self');
+  }
+
+  getActive(): boolean {
+    return this.cookie.get('active') === 'true';
+  }
+
+  getUsuarioLogueado(): string {
+    return this.cookie.get('usuario');
+  }
+
+  getUserIDLogged(): number {
+    return Number(this.cookie.get('id'));
+  }
+
+  getRolUserLogged(): number {
+    return Number(this.cookie.get('rol'));
   }
 
 }
