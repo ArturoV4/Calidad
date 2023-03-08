@@ -43,7 +43,7 @@ export class OpcionesComponent {
       this.irCalificaciones();
     } else if (nombre == "ASISTENCIAS") {
       this.irAsistencias();
-    } else if (nombre == "GESTIÓN CALIDAD") {
+    } else if (nombre == "DETALLES DE CALIDAD") {
       this.irEvaluacionDocente();
     }
   }
